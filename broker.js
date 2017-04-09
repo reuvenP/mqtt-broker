@@ -2,8 +2,8 @@ var mosca = require('mosca');
 
 var pubsubsettings = { // define mqtt server backend at MongoDB mqtt DB
     type: 'mongo',
-    url: 'mongodb://localhost:27017/ex7mqtt_brocker?auto_reconnect=true',
-    pubsubCollection: 'ex7mqtt_brocker_collection',
+    url: 'mongodb://localhost:27017/mqtt_brocker?auto_reconnect=true',
+    pubsubCollection: 'mqtt_brocker_collection',
     mongo: {}
 };
 
@@ -12,8 +12,12 @@ var settings = {
     backend: pubsubsettings,
     persistence: {
         factory: mosca.persistence.Mongo,
-        url: 'mongodb://localhost:27017/ex7mqtt_brocker'
+        url: 'mongodb://localhost:27017/mqtt_brocker'
     }
 };
 
 var server = new mosca.Server(settings);
+
+server.on('published', function(packet, client) {
+    console.log('Published', packet.payload);
+});
