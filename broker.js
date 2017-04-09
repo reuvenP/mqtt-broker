@@ -26,5 +26,10 @@ function setup() {
 }
 
 server.on('published', function(packet, client) {
-    console.log('Published', packet.payload);
+    if (packet.topic == 'msgs') {
+        var stringBuf = packet.payload.toString('utf-8');
+        var obj = JSON.parse(stringBuf);
+        console.log(obj);
+        //TODO: publish it again via broadcast
+    }
 });
