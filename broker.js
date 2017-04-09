@@ -18,6 +18,13 @@ var settings = {
 
 var server = new mosca.Server(settings);
 
+server.on('ready', setup);
+
+// fired when the mqtt server is ready
+function setup() {
+    console.log('Mosca server is up and running');
+}
+
 server.on('published', function(packet, client) {
     console.log('Published', packet.payload);
 });
